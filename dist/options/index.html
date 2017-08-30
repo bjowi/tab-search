@@ -3,24 +3,28 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <title>TabSearch Options</title>
   </head>
 
   <body>
     <main>
-      <fieldset>
-        <legend>Website Preview:</legend>
-        <div>
-          <input type="checkbox" id="favicon" name="tab-preview" value="favicon">
-          <label for="favicon">Favicon</label>
-        </div>
-        <div>
-          <input type="checkbox" id="screenshot" name="tab-preview" value="screenshot">
-          <label for="screenshot">Screenshot</label>
-        </div>
-      </fieldset>
-    </main>
-    <script src="options.js"></script>
+      <form id="options">
+        <fieldset>
+          <legend>Website Preview:</legend>
+          <div>
+            <input type="radio" id="favicon" name="tab-preview" value="favicon">
+            <label for="favicon">Favicon</label>
+          </div>
+          <div>
+            <input type="radio" id="screenshot" name="tab-preview" value="screenshot">
+            <label for="screenshot">Screenshot</label>
+          </div>
+        </fieldset>
+        <button type="submit">Save</button>
+      </form>
 
+    </main>
+    <script src="options_bundle.js"></script>
   </body>
 
 </html>

@@ -8,7 +8,7 @@ const DIRNAME = __dirname;
 const distFolder = path.join(DIRNAME, 'dist');
 const releaseFolder = browser => path.join(DIRNAME, 'releases', browser);
 
-function getPlugins() {
+function getPlugins(folder) {
   const plugins = [];
   if (!isProduction) return plugins;
   plugins.push(new CleanWebpackPlugin(['releases']));
@@ -24,8 +24,8 @@ function getPlugins() {
       flatten: true,
     },
     {
-      from: path.join(distFolder, 'popup'),
-      to: path.join(releaseFolder('firefox'), 'popup'),
+      from: path.join(distFolder, folder),
+      to: path.join(releaseFolder('firefox'), folder),
     },
     // Chrome
     {
@@ -33,8 +33,8 @@ function getPlugins() {
       to: path.join(releaseFolder('chrome'), 'assets'),
     },
     {
-      from: path.join(distFolder, 'popup'),
-      to: path.join(releaseFolder('chrome'), 'popup'),
+      from: path.join(distFolder, folder),
+      to: path.join(releaseFolder('chrome'), folder),
     },
     {
       from: path.join(distFolder, 'manifest.json'),
@@ -78,31 +78,42 @@ function transformToChromeManifest(content) {
   return JSON.stringify(manifest, null, 2);
 }
 
-function getOutput() {
+function getOutput(folder) {
   const output = {};
   if (isProduction) {
-    output.path = path.join(__dirname, 'releases', 'firefox', 'popup');
-    output.filename = 'popup_bundle.js';
+    output.path = path.join(__dirname, 'releases', 'firefox', folder);
+    output.filename = `${folder}_bundle.js`;
   } else {
-    output.path = path.join(__dirname, 'dist', 'popup');
-    output.filename = 'popup_bundle.js';
+    output.path = path.join(__dirname, 'dist', folder);
+    output.filename = `${folder}_bundle.js`;
   }
   return output;
 }
 
-module.exports = {
-  entry: path.join(__dirname, 'src', 'index.js'),
-  module: {
-    loaders: [
-      {
-        test: /\.js$/i,
-        loader: 'babel-loader',
-        query: {
-          plugins: ['transform-es2015-modules-commonjs'],
+function getEntry(folder) {
+  return path.join(__dirname, 'src', folder, 'index.js');
+}
+
+function webpackObject(folder) {
+  return {
+    entry: getEntry(folder),
+    module: {
+      loaders: [
+        {
+          test: /\.js$/i,
+          loader: 'babel-loader',
+          query: {
+            plugins: ['transform-es2015-modules-commonjs'],
+          },
         },
-      },
-    ],
-  },
-  plugins: getPlugins(),
-  output: getOutput(),
-};
+      ],
+    },
+    plugins: getPlugins(),
+    output: getOutput(folder),
+  }
+}
+
+module.exports = [
+  webpackObject('popup'),
+  webpackObject('options'),
+];

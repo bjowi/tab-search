@@ -5,11 +5,13 @@
   "description": "Keyboard-accessible Tab Management",
   "applications": {
     "gecko": {
+      "id": "{11a68c03-baa3-41fb-869c-5172c4c4dd2e}",
       "strict_min_version": "52.0a1"
     }
   },
   "options_ui": {
-    "page": "options/index.html"
+    "page": "options/index.html",
+    "browser_style": true
   },
   "permissions": [
     "tabs",
