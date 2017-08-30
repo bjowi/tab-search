@@ -2,15 +2,19 @@
   "manifest_version": 2,
   "name": "TabSearch",
   "version": "0.2.0",
-  "description": "Easy tab search & switching",
+  "description": "Keyboard-accessible Tab Management",
   "applications": {
     "gecko": {
       "strict_min_version": "52.0a1"
     }
   },
+  "options_ui": {
+    "page": "options/index.html"
+  },
   "permissions": [
     "tabs",
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "icon": {
     "32": "assets/search.svg",

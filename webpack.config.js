@@ -82,10 +82,10 @@ function getOutput() {
   const output = {};
   if (isProduction) {
     output.path = path.join(__dirname, 'releases', 'firefox', 'popup');
-    output.filename = 'bundle.js';
+    output.filename = 'popup_bundle.js';
   } else {
     output.path = path.join(__dirname, 'dist', 'popup');
-    output.filename = 'bundle.js';
+    output.filename = 'popup_bundle.js';
   }
   return output;
 }
